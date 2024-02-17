@@ -1,0 +1,94 @@
+body{
+  margin:0;
+  padding:0;
+  background-color: #fff;
+  font-family: 'Poppins', sans-serif;
+  /* font-family:'Playfair Display", serif'; */
+
+}
+a{
+  text-decoration:none;
+}
+a:hover{
+  text-decoration: none;
+}
+@keyframes sub-menu {
+  0%{
+      width:0%;
+  }
+  100%{
+      width: 100%;
+  }
+  
+}
+button{
+  position: relative;
+  z-index: 1;
+}
+button::before{
+  position: absolute;
+  content: '';
+  left:0px;
+  top:0px;
+  background:#fdc703;
+  height:100%;
+  width:0%;
+  transition: 0.5s;
+  border-radius: 10px;
+  z-index: -1;
+}
+a{
+  font-size: 15px;
+  font-weight: 400;
+  color:#777;
+  font-family: 'Poppins', sans-serif;
+}
+a:hover{
+  color:#029e9d;
+}
+button:hover::before{
+  width:100%!important;
+}
+.slick-slide .slick-active{
+  width:200px!important;
+}
+.css-4hqtrk-MuiButtonBase-root-MuiButton-root{
+  background:#143e6b;
+  color:#fff;
+}
+.css-1pyy021-MuiTabs-flexContainer{
+  justify-content: space-evenly;
+}
+.banner-img{
+  animation: movebounce 5s infinite;
+}
+@keyframes movebounce{
+  0%{
+    transform: translateY(0px);
+  }
+  50%{
+    transform: translateY(20px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+.dropdown-link {
+  position: absolute;
+  left: 0px;
+  top: 17px;
+  width: 250px;
+  background: #fff;
+  box-shadow: 0 0 15px #cccccc57;
+  display: none;
+  transition: 0.7s;
+}
+.dropdown-link a{
+  padding: 15px;
+}
+.dropdown-link a:hover{
+  background: #029e9d;
+  color: #fff;
+  width:100%;
+}

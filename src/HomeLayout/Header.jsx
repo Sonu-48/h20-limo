@@ -116,25 +116,42 @@ function Header() {
                 <>
                   {headerData.map((headerdata) => {
                     return (
-                      <NavLink to={headerdata.url} id={headerdata.id}>
-                        {headerdata.label}
-                        {headerdata.subItems && (
-                          <Box className="dropdown-link">
-                            <List>
-                              {headerdata.subItems.map((data) => (
-                                <ListItem
-                                  key={data.id}
-                                  sx={{ borderBottom: "1px dashed #f1f1f1" }}
-                                >
-                                  <Link to={data.url} id={data.id}>
-                                    {data.label}
-                                  </Link>
-                                </ListItem>
-                              ))}
-                            </List>
-                          </Box>
+                      <React.Fragment key={headerdata.id}>
+                        {headerdata.label === "ABOUT US" ? (
+                          // Use ScrollLink for "ABOUT US" link
+                          <ScrollLink
+                            to="about-us"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration={500}
+                          >
+                            {headerdata.label}
+                          </ScrollLink>
+                        ) : (
+                          <NavLink to={headerdata.url} id={headerdata.id}>
+                            {headerdata.label}
+                            {headerdata.subItems && (
+                              <Box className="dropdown-link">
+                                <List>
+                                  {headerdata.subItems.map((data) => (
+                                    <ListItem
+                                      key={data.id}
+                                      sx={{
+                                        borderBottom: "1px dashed #f1f1f1",
+                                      }}
+                                    >
+                                      <Link to={data.url} id={data.id}>
+                                        {data.label}
+                                      </Link>
+                                    </ListItem>
+                                  ))}
+                                </List>
+                              </Box>
+                            )}
+                          </NavLink>
                         )}
-                      </NavLink>
+                      </React.Fragment>
                     );
                   })}
                 </>
@@ -143,13 +160,13 @@ function Header() {
                   <NavLink to="/">HOME</NavLink>
                   <ScrollLink
                     activeClass="active"
-                    to="section1"
+                    to="about-us"
                     spy={true}
                     smooth={true}
                     offset={-70}
                     duration={500}
                   >
-                   ABOUT US
+                    ABOUT US
                   </ScrollLink>
                 </>
               )}
@@ -164,7 +181,7 @@ function Header() {
               {userdata.firstname ? (
                 <>
                   <Link component={Button} style={{ position: "relative" }}>
-                    <FaRegUser /> 
+                    <FaRegUser />
                     {userdata.firstname}
                     <Box className="dropdown-link">
                       <List>

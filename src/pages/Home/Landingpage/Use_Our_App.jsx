@@ -39,7 +39,7 @@ const Wrapper = styled("div")({
 
 function Use_Our_App() {
   return (
-    <Wrapper>
+    <Wrapper id="about-us">
       <Container>
         <Grid container spacing={4}>
           <Grid item lg={6} md={6} sm={12} xs={12}>

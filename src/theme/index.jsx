@@ -27,7 +27,7 @@ const theme = createTheme({
               padding: "14px 24px",
               textTransform: "capitalize",
               // fontFamily:"'Futura, sans-serif'",
-              boxShadow:'0px 0px 0px 4px rgba(255, 255, 255, 0.1)',
+              boxShadow: "0px 0px 0px 4px rgba(255, 255, 255, 0.1)",
               "&:hover": {
                 backgroundColor: "#029e9d",
                 color: "#029e9d",
@@ -85,18 +85,27 @@ const theme = createTheme({
       },
     },
     MuiMenuItem: {
-     styleOverrides:{
-      // root: {
-      //   background: 'blue',
-       
-      // },
-      '& .Mui-selected': {
-        backgroundColor: 'blue'
-      }
-     }
+      styleOverrides: {
+        // root: {
+        //   background: 'blue',
+
+        // },
+        "& .Mui-selected": {
+          backgroundColor: "blue",
+        },
+      },
     },
-    
-      
+    MuiCheckbox:{
+      styleOverrides:{
+        root:{
+          "&.Mui-checked":{
+            color:'#029e9d'
+          }
+        },
+        
+      }
+    },
+
     MuiPaper: {
       styleOverrides: {
         // Name of the slot
@@ -112,7 +121,7 @@ const theme = createTheme({
           width: "100%",
           borderRadius: "8px",
           // padding:'20px 0px',
-          margin:'10px',
+          margin: "10px",
           boxShadow:
             "0 3.3px 39.5px -27px rgba(255,255,255,.04), 0 4px 65.1px -27px rgba(255,255,255,.08400000000000001), 0 5.1px 113.7px -27px rgba(255,255,255,.083), 0 8px 246px -27px rgba(255,255,255,.079)",
         },
@@ -125,11 +134,11 @@ const theme = createTheme({
           fontWeight: 600,
           fontSize: "18px",
           textTransform: "capitalize",
-          border:'1px solid #f1f1f1',
-          borderRadius:'10px',
+          border: "1px solid #f1f1f1",
+          borderRadius: "10px",
           "&.Mui-selected": {
-           background:'#029e9d',
-           color:'#fff'
+            background: "#029e9d",
+            color: "#fff",
           },
         },
       },
@@ -141,9 +150,9 @@ const theme = createTheme({
           // height: "1px",
         },
       },
-      "flexContainer":{
-        justifyContent:'space-between',
-      }
+      flexContainer: {
+        justifyContent: "space-between",
+      },
     },
     MuiDayCalendar: {
       styleOverrides: {
@@ -160,26 +169,24 @@ const theme = createTheme({
         },
       },
     },
-    MuiBadge:{
-      styleOverrides:{
-        badge:{
-          background:'#f23b3b',
-          top:'-5px',
-          right:'5px'
-        }
-      }
-    }
-  },
-  MuiBreadcrumbs:{
-    styleOverrides:{
-      root:{
-        "& .MuiBreadcrumbs-separator":{
-          color:'#fff!important',
-        }
+    MuiBadge: {
+      styleOverrides: {
+        badge: {
+          background: "#f23b3b",
+          top: "-5px",
+          right: "5px",
+        },
       },
-      
-    }
-  }
-  
+    },
+  },
+  MuiBreadcrumbs: {
+    styleOverrides: {
+      root: {
+        "& .MuiBreadcrumbs-separator": {
+          color: "#fff!important",
+        },
+      },
+    },
+  },
 });
 export default theme;

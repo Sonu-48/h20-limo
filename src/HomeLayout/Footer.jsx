@@ -13,6 +13,12 @@ const FooterSection = styled('div')({
   backgroundColor:'#17233e',
   height:'70vh',
   position:'relative',
+  "@media screen and (max-width:600px)":{
+        height:'100vh',
+        ".section-shape":{
+          display:'none',
+        }
+  },
   ".section-shape":{
     backgroundImage:"url('/images/shape.png')",
     position:'absolute',
@@ -44,6 +50,7 @@ const FooterSection = styled('div')({
     display:'flex',
     alignItems:'center',
     justifyContent:'space-between',
+    flexWrap:'wrap',
     marginTop:'40px',
     "& p":{
       color:'#fff',
@@ -69,7 +76,8 @@ const FooterSection = styled('div')({
       transition:'0.5s'
      }
     }
-  }
+  },
+
 })
 
 function Footer(){

@@ -43,7 +43,7 @@ export const headerData = [
     {
       id:'5',
       label:'MESSAGES',
-      url:'/chats'
+      url:'/all-charts'
     },
     {
       id:'6',

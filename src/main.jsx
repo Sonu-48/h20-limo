@@ -5,13 +5,15 @@ import "./index.css";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme/index.jsx";
 import { AuthProvider } from "./Components/AuthContext.jsx";
+import { Provider } from "react-redux";
+import store from './redux/store.jsx'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-    </AuthProvider>
+    </Provider>
   </React.StrictMode>
 );

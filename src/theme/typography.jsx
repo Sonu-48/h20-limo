@@ -33,18 +33,17 @@ const typography={
         fontSize:'20px',
         fontWeight:600,
         fontFamily:'"Playfair Display", serif',
-        "@media screen and (max-width:600px)":{
-            fontSize:'18px',
-        }
 
     },
     h5:{
-        fontSize:'22px',
-        fontWeight:'500',
+        fontSize:'18px',
+        fontWeight:'600',
         fontFamily:'"Playfair Display", serif',
+        color:'#fff',
         "@media screen and (max-width:600px)":{
-            fontSize:'16px',
+            fontSize:'14px',
         }
+
 
     },
     h6:{

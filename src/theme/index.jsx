@@ -84,6 +84,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+     styleOverrides:{
+      // root: {
+      //   background: 'blue',
+       
+      // },
+      '& .Mui-selected': {
+        backgroundColor: 'blue'
+      }
+     }
+    },
+    
+      
     MuiPaper: {
       styleOverrides: {
         // Name of the slot
@@ -157,6 +170,16 @@ const theme = createTheme({
       }
     }
   },
+  MuiBreadcrumbs:{
+    styleOverrides:{
+      root:{
+        "& .MuiBreadcrumbs-separator":{
+          color:'#fff!important',
+        }
+      },
+      
+    }
+  }
   
 });
 export default theme;

@@ -11,7 +11,7 @@ const FooterSection = styled('div')({
   backgroundPosition:'right',
   backgroundRepeat:'no-repeat',
   backgroundColor:'#17233e',
-  height:'55vh',
+  height:'70vh',
   position:'relative',
   ".section-shape":{
     backgroundImage:"url('/images/shape.png')",

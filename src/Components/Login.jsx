@@ -19,6 +19,7 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import Forgotpassword from "./Forgotpassword";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const LoginWrapper = styled("div")({
   ".forgot-password": {
@@ -49,34 +50,42 @@ const LoginSchema = Yup.object().shape({
 function Login({ setLoginmodal }) {
   const [showpassword, setShowpassword] = useState(false);
   const [showforgotmodal, setShowforgotmodal] = useState(false);
+
+
   // const navigate=useNavigate();
   const handleTogglePassword = () => {
     setShowpassword((prevShowPassword) => !prevShowPassword);
   };
-  const userValueString = localStorage.getItem("values");
-  const userValue = userValueString ? JSON.parse(userValueString) : null;
-  console.log(userValue);
+ 
 
-  const handleSubmit = (values) => {
-    if (
-      values.email === uservalue.email &&
-      values.password === uservalue.password
-    ) {
-      toast.success("Login Successfully");
-      setLoginmodal(false);
-    } else {
-      toast.error("Bad Credentials");
-    }
-    //  localStorage.setItem('values',JSON.stringify(values));
-    //  toast.success("Login Successfully");
-    //  setLoginmodal(false);
-    //  navigate('/about')
-  };
+const handleSubmit = async(values)=>{
+  try{
+      const res = await axios.post("https://quickstart-1603869425824-default-rtdb.firebaseio.com/userdata.json",{
+        body:{
+          email: values.email,
+          password: values.password,
+        }
+      })
+      if(res.status === 200){
+        toast.success("login Successfully");
+          // localStorage.setItem(res.data.token)
+      }
+      else{
+        toast.error(error);
+      }
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
 
   // handleForgot modal function
   const handleForgot = () => {
     setShowforgotmodal(true);
-  };
+  }
+
+  
   return (
     <LoginWrapper>
       <Container>
@@ -119,7 +128,7 @@ function Login({ setLoginmodal }) {
                       placeholder="Email"
                       fullWidth
                       name="email"
-                      value={values.name}
+                      value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={Boolean(touched.email && errors.email)}
@@ -135,7 +144,7 @@ function Login({ setLoginmodal }) {
                       placeholder="Password"
                       fullWidth
                       name="password"
-                      value={values.name}
+                      value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={Boolean(touched.password && errors.password)}

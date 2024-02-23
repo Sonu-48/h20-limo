@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Typography,
   styled,
   FormControl,
-  FormHelperText
+  FormHelperText,
 } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const BannerSection = styled("div")({
   background: "url('/images/testimonial.png')",
@@ -31,28 +32,51 @@ const BannerSection = styled("div")({
 });
 
 function Bannerpage() {
-
   const [datevalue, setDatevalue] = React.useState(dayjs());
-  const [location,setLocation] = useState({pickup:'',destination:''})
-  const [errormsg,setErrormsg] = useState(false);
-  
-  const handleLocation = (e)=>{
-    setLocation({...location,[e.target.name]:e.target.value})
-  }
+  const [location, setLocation] = useState({ pickup: "", destination: "" });
+  const [errormsg, setErrormsg] = useState(false);
+  const [userdata,setUserdata] = useState({})
 
-  // handleSubmit function 
-   const handleSubmit = ()=>{
-        if(location.pickup.length!== 0 && location.destination.length!== 0){
-          toast.success("Confirm")
-          setErrormsg(false);
-          setLocation({pickup:'',destination:''})
+  const usergetdataApi = async()=>{
+    const user_id= "user123";
+    try{
+        const res= await axios.get(`https://quickstart-1603869425824-default-rtdb.firebaseio.com/${user_id}userdata.json`);
+        if(res.status === 200){
+          setUserdata(res.data);
         }
-        else{
-          setErrormsg("this field is required");
-          toast.error("All fields are required")
-        }
-   }
-  
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+  useEffect(()=>{
+    usergetdataApi();
+  },[])
+
+  // get value of pickup and destination
+  const handleLocation = (e) => {
+    setLocation({ ...location, [e.target.name]: e.target.value });
+  };
+
+  // handleSubmit function
+  const handleSubmit = () => {
+    if (location.pickup.length !== 0 && location.destination.length !== 0) {
+      if(location.pickup!==location.destination){
+        toast.success("Confirm");
+        setErrormsg(false);
+        setLocation({ pickup: "", destination: "" });
+      }
+      else{
+        toast.error("Both fields can't be same")
+      }
+     
+    } 
+    else {
+      setErrormsg("this field is required");
+      toast.error("All fields are required");
+    }
+  };
+
   return (
     <BannerSection>
       <Container>
@@ -89,30 +113,50 @@ function Bannerpage() {
               <Box mt={3}>
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <Select variant="outlined" fullWidth defaultValue="Pickup" name="pickup" value={location.pickup} onChange={handleLocation}>
+                    <Select
+                      variant="outlined"
+                      fullWidth
+                      defaultValue="Pickup"
+                      name="pickup"
+                      // value={location.pickup}
+                      onChange={handleLocation}
+                    >
                       <MenuItem value="Pickup">Pickup</MenuItem>
+                      <MenuItem value="Bellport">Bellport</MenuItem>
+                      <MenuItem value="Patchogue">Patchogue</MenuItem>
+                      <MenuItem value="Blue Point">Blue Point</MenuItem>
+                      <MenuItem value="West Sayville">West Sayville</MenuItem>
                     </Select>
                     <FormHelperText error>{errormsg}</FormHelperText>
                   </Grid>
                   <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <Select variant="outlined" fullWidth defaultValue="Destination" name="destination" value={location.destination} onChange={handleLocation}>
+                    <Select
+                      variant="outlined"
+                      fullWidth
+                      defaultValue="Destination"
+                      name="destination"
+                      // value={location.destination}
+                      onChange={handleLocation}
+                    >
                       <MenuItem value="Destination">Destination</MenuItem>
+                      <MenuItem value="Bellport">Bellport</MenuItem>
+                      <MenuItem value="Patchogue">Patchogue</MenuItem>
+                      <MenuItem value="Blue Point">Blue Point</MenuItem>
+                      <MenuItem value="West Sayville">West Sayville</MenuItem>
                     </Select>
                     <FormHelperText error>{errormsg}</FormHelperText>
                   </Grid>
                   <Grid item lg={12} md={12} sm={12} xs={12}>
-                  <FormControl
-                    fullWidth
-                  >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        value={datevalue}
-                        onChange={(date) => setDatevalue(date)}
-                        format="DD-MM-YYYY"
-                        disablePast={true}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
+                    <FormControl fullWidth>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          value={datevalue}
+                          onChange={(date) => setDatevalue(date)}
+                          format="DD-MM-YYYY"
+                          disablePast={true}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
                   </Grid>
                 </Grid>
                 <Box mt={2}>

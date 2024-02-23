@@ -15,6 +15,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { MdOutlineVisibilityOff, MdOutlineVisibility } from "react-icons/md";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adduser } from "../redux/UserAuthSlice";
 // import moment from "moment/moment";
 
 const Signupwrapper = styled("div")({
@@ -76,18 +80,38 @@ const SignupSchema = Yup.object().shape({
 
 function Signup({ setLoginmodal }) {
   const [showpassword, setShowpassword] = useState(false);
+  const [disabled,setDisabled] = useState(false);
+  const dispatch = useDispatch();
 
   const handleTogglePassword = () => {
     setShowpassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    localStorage.setItem("values", JSON.stringify(values));
-    resetForm({ values: "" });
-    toast.success("Signup Successfully");
-    setLoginmodal(false);
-    // console.log(datevalue);
-  };
+ const handleSubmit = async(values,{resetForm}) =>{
+  setDisabled(true);
+  try{
+        const res = await axios.post("https://quickstart-1603869425824-default-rtdb.firebaseio.com/userdata.json",{
+          body:{
+            firstname: values.firstname,
+            lastname: values.lastname,
+            email: values.email,
+            password: values.password,
+            confirmpassword: values.confirmpassword,
+          }
+        })
+        if(res.status === 200){
+          dispatch(adduser(values))
+          toast.success("Signup Successfully");
+          resetForm({values:''})
+          setDisabled(false);
+          setLoginmodal(false);
+          Navigate("/login")
+        }
+  }
+  catch(error){
+    console.log(error);
+  }
+ }
   return (
     <Signupwrapper>
       <Container>
@@ -121,7 +145,7 @@ function Signup({ setLoginmodal }) {
                       variant="outlined"
                       name="firstname"
                       placeholder="First Name"
-                      value={values.name}
+                      value={values.firstname}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       fullWidth
@@ -138,7 +162,7 @@ function Signup({ setLoginmodal }) {
                       placeholder="Last Name"
                       name="lastname"
                       fullWidth
-                      value={values.name}
+                      value={values.lastname}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={Boolean(touched.lastname && errors.lastname)}
@@ -155,7 +179,7 @@ function Signup({ setLoginmodal }) {
                       placeholder="Email"
                       name="email"
                       fullWidth
-                      value={values.name}
+                      value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={Boolean(touched.email && errors.email)}
@@ -247,6 +271,7 @@ function Signup({ setLoginmodal }) {
                   color="primary"
                   size="small"
                   type="submit"
+                  disabled={disabled}
                 >
                   Create an Account
                 </Button>
